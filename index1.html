@@ -1,0 +1,94 @@
+<div id="buttons">
+  <input
+    id="renderBostonAll"
+    type="button"
+    value="Show all employees"
+    onclick="renderBostonAll(boston, document.getElementById('container'));"
+  />
+  <input
+    id="renderBostonTopSalaries"
+    type="button"
+    value="Show top 5 salaries"
+    onclick="renderBostonTopSalaries(boston, document.getElementById('container'));"
+  />
+  <input
+    id="renderBostonTopEmployees"
+    type="button"
+    value="Show top employees"
+    onclick="renderBostonTopEmployees(boston, document.getElementById('container'));"
+  />
+</div>
+
+<div id="container">
+  <!-- populated by JS-->
+</div>
+
+<script src="./boston.js"></script>
+
+<script>
+  function renderBostonAll(boston, container) {
+    var people = boston.data;
+    const len = people.length; // boston is an array
+    var html = "";
+    for (let i = 0; i < len; i++) {
+      html +=
+        '<li class="Boston">' +
+        "<h2>" +
+        people[i][8] +
+        "</h2>" +
+        "<h3>" +
+        people[i][11] +
+        "</h3>";
+    }
+    container.innerHTML = '<ul id = "boston">' + html + "</ul>";
+  }
+
+  function renderBostonTopSalaries(boston, container) {
+    var people = boston.data;
+
+    /**
+     * Sort people by salary (index 11) in asc order
+     * Only take the top five
+     */
+    var topSalaries = people.sort((a, b) => b[11] - a[11]).slice(0, 5);
+
+    var htmlTopSal = "";
+    for (let i = 0; i < topSalaries.length; i++) {
+      htmlTopSal +=
+        '<li class="topSalaries">' +
+        "<h2>" +
+        topSalaries[i][8] +
+        "</h2>" +
+        "<h3>" +
+        topSalaries[i][11] +
+        "</h3>";
+    }
+    container.innerHTML = '<ul id = "topSalaries">' + htmlTopSal + "</ul>";
+  }
+
+  function renderBostonTopEmployees(boston, container) {
+    var people = boston.data;
+
+    /**
+     * Filter people who's salary is above $100000
+     */
+    var topEmployees = people.filter((a) => a[11] > 100000);
+
+    var htmlTopEmp = "";
+    for (let i = 0; i < topEmployees.length; i++) {
+      htmlTopEmp +=
+        '<li class="topEmployees">' +
+        "<h2>" +
+        topEmployees[i][8] +
+        "</h2>" +
+        "<h3>" +
+        topEmployees[i][11] +
+        "</h3>";
+    }
+    container.innerHTML = '<ul id = "topEmployees">' + htmlTopEmp + "</ul>";
+  }
+
+  //renderBostonAll(boston, document.getElementById("container"));
+  //renderBostonTopSalaries(boston, document.getElementById("container"));
+  //renderBostonTopEmployees(boston, document.getElementById("container"));
+</script>
